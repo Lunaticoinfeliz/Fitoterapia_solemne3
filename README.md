@@ -35,12 +35,20 @@ npm run preview
 - SASS/SCSS (variables, mixins, partials)
 - Vite
 
-## Estructura
+## Estructura (diseño atómico)
 
 ```
 src/
-  components/   # Componentes reutilizables
-  pages/        # Páginas de la aplicación
-  datos/        # Datos estáticos (plantas, eventos)
-  styles/       # Estilos globales SCSS
+  components/
+    atoms/        # Boton, EncabezadoSeccion, ImagenConRespaldo
+    molecules/    # TarjetaBeneficio, TarjetaPlanta, TarjetaEvento, ItemPasoHuerto
+    organisms/    # SeccionHero, SeccionGuiaHuerto, SeccionPlantas, SeccionEventos, SeccionComoEmpezar, PiePagina
+    BarraNavegacion/
+  pages/          # PaginaInicio (landing)
+  datos/          # plantas.js, eventos.js, beneficiosHuerto.js, pasosHuerto.js
+  styles/         # Variables, mixins y layout global SCSS
 ```
+
+## Rama `landing`
+
+El landing se desarrolla en la rama `landing` para integrar vía pull request hacia `main`.

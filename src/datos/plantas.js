@@ -39,7 +39,7 @@ export const plantas = [
     id: 'calendula',
     nombre: 'Caléndula',
     imagen:
-      'https://images.unsplash.com/photo-1597848213445-6419e4e7e0b8?w=800&q=80',
+      'https://images.unsplash.com/photo-1599629956321-4f38d1d3f0e0?w=800&q=80',
     beneficios: 'Cicatrizante, antiinflamatoria y suave con la piel sensible.',
     usos: 'Cremas, pomadas y lavados dérmicos caseros.',
     categoria: 'dermatológica',
