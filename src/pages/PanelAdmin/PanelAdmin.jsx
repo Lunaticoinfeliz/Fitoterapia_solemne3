@@ -2,44 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Plus, Edit2, Trash2, LogOut, Leaf, Save, X, Calendar } from 'lucide-react';
 import './PanelAdmin.scss';
+import { plantas } from "../../datos/plantas.js";
+import { eventos } from "../../datos/eventos.js";
 
-const initialPlants = [
-  {
-    name: 'Lavanda',
-    image: 'https://images.unsplash.com/photo-1684585001763-757c9fae0218?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw3fHx0aGVyYXBldXRpYyUyMGhlcmJzJTIwZ2FyZGVuJTIwcGxhbnRzJTIwbWVkaWNpbmFsfGVufDF8fHx8MTc3ODY5NDIxN3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    benefits: 'Calma la ansiedad, mejora el sueño y alivia dolores de cabeza',
-    uses: 'Infusiones, aceites esenciales, sachets aromáticos',
-    category: 'Aromática'
-  },
-  {
-    name: 'Menta',
-    image: 'https://images.unsplash.com/photo-1570910015265-5da158c809e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw4fHx0aGVyYXBldXRpYyUyMGhlcmJzJTIwZ2FyZGVuJTIwcGxhbnRzJTIwbWVkaWNpbmFsfGVufDF8fHx8MTc3ODY5NDIxN3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    benefits: 'Ayuda en la digestión, alivia náuseas y refresca el aliento',
-    uses: 'Tés, condimento culinario, infusiones digestivas',
-    category: 'Digestiva'
-  }
-];
-
-const initialEvents = [
-  {
-    title: 'Taller de Cultivo de Hierbas Aromáticas',
-    date: '20 de Mayo, 2026',
-    time: '10:00 AM - 12:00 PM',
-    location: 'Jardín Botánico Municipal',
-    attendees: 25,
-    image: 'https://images.unsplash.com/photo-1627795785435-8dc02e0fc5f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwyfHx0aGVyYXBldXRpYyUyMGhlcmJzJTIwZ2FyZGVuJTIwcGxhbnRzJTIwbWVkaWNpbmFsfGVufDF8fHx8MTc3ODY5NDIxN3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    description: 'Aprende las técnicas básicas para cultivar tus propias hierbas medicinales en casa.'
-  },
-  {
-    title: 'Curso de Preparación de Remedios Naturales',
-    date: '28 de Mayo, 2026',
-    time: '3:00 PM - 6:00 PM',
-    location: 'Centro Comunitario Verde',
-    attendees: 15,
-    image: 'https://images.unsplash.com/photo-1756935446645-cc030b6962a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw1fHx0aGVyYXBldXRpYyUyMGhlcmJzJTIwZ2FyZGVuJTIwcGxhbnRzJTIwbWVkaWNpbmFsfGVufDF8fHx8MTc3ODY5NDIxN3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    description: 'Descubre cómo crear tinturas, ungüentos y aceites esenciales con plantas de tu huerto.'
-  }
-];
 
 function PanelAdmin() {
   const navigate = useNavigate();
@@ -50,11 +15,11 @@ function PanelAdmin() {
   const [showAddPlantForm, setShowAddPlantForm] = useState(false);
   const [editingPlantIndex, setEditingPlantIndex] = useState(null);
   const [plantFormData, setPlantFormData] = useState({
-    name: '',
-    image: '',
-    benefits: '',
-    uses: '',
-    category: ''
+    nombre: '',
+    imagen: '',
+    beneficios: '',
+    usos: '',
+    categoria: ''
   });
 
   // Estados de Eventos
@@ -62,17 +27,17 @@ function PanelAdmin() {
   const [showAddEventForm, setShowAddEventForm] = useState(false);
   const [editingEventIndex, setEditingEventIndex] = useState(null);
   const [eventFormData, setEventFormData] = useState({
-    title: '',
-    date: '',
-    time: '',
-    location: '',
-    attendees: 0,
-    image: '',
-    description: ''
+    titulo: '',
+    fecha: '',
+    hora: '',
+    ubicacion: '',
+    participantes: 0,
+    imagen: '',
+    descripcion: ''
   });
 
   useEffect(() => {
-    // Proteger la ruta: verificar autenticación
+    // verifica autenticación
     const isAdmin = localStorage.getItem('isAdmin');
     if (isAdmin !== 'true') {
       navigate('/admin/login');
@@ -84,8 +49,8 @@ function PanelAdmin() {
     if (savedPlants) {
       setPlants(JSON.parse(savedPlants));
     } else {
-      setPlants(initialPlants);
-      localStorage.setItem('adminPlants', JSON.stringify(initialPlants));
+      setPlants(plantas);
+      localStorage.setItem('adminPlants', JSON.stringify(plantas));
     }
 
     // Cargar eventos
@@ -93,8 +58,8 @@ function PanelAdmin() {
     if (savedEvents) {
       setEvents(JSON.parse(savedEvents));
     } else {
-      setEvents(initialEvents);
-      localStorage.setItem('adminEvents', JSON.stringify(initialEvents));
+      setEvents(eventos);
+      localStorage.setItem('adminEvents', JSON.stringify(eventos));
     }
   }, [navigate]);
 
@@ -120,11 +85,11 @@ function PanelAdmin() {
     localStorage.setItem('adminPlants', JSON.stringify(updatedPlants));
 
     setPlantFormData({
-      name: '',
-      image: '',
-      benefits: '',
-      uses: '',
-      category: ''
+      nombre: '',
+      imagen: '',
+      beneficios: '',
+      usos: '',
+      categoria: ''
     });
     setShowAddPlantForm(false);
   };
@@ -147,11 +112,11 @@ function PanelAdmin() {
     setShowAddPlantForm(false);
     setEditingPlantIndex(null);
     setPlantFormData({
-      name: '',
-      image: '',
-      benefits: '',
-      uses: '',
-      category: ''
+      nombre: '',
+      imagen: '',
+      beneficios: '',
+      usos: '',
+      categoria: ''
     });
   };
 
@@ -172,13 +137,13 @@ function PanelAdmin() {
     localStorage.setItem('adminEvents', JSON.stringify(updatedEvents));
 
     setEventFormData({
-      title: '',
-      date: '',
-      time: '',
-      location: '',
-      attendees: 0,
-      image: '',
-      description: ''
+      titulo: '',
+      fecha: '',
+      hora: '',
+      ubicacion: '',
+      participantes: 0,
+      imagen: '',
+      descripcion: ''
     });
     setShowAddEventForm(false);
   };
@@ -201,13 +166,13 @@ function PanelAdmin() {
     setShowAddEventForm(false);
     setEditingEventIndex(null);
     setEventFormData({
-      title: '',
-      date: '',
-      time: '',
-      location: '',
-      attendees: 0,
-      image: '',
-      description: ''
+      titulo: '',
+      fecha: '',
+      hora: '',
+      ubicacion: '',
+      participantes: 0,
+      imagen: '',
+      descripcion: ''
     });
   };
 
@@ -240,7 +205,8 @@ function PanelAdmin() {
         </div>
       </header>
 
-      <div className="panel-admin__content">
+      {/* Uso de etiqueta <main> para el contenido principal */}
+      <main className="panel-admin__content">
         {/* Tabs */}
         <div className="panel-admin__tabs">
           <div className="panel-admin__tab-list">
@@ -249,6 +215,7 @@ function PanelAdmin() {
               className={`panel-admin__tab-btn ${
                 activeTab === 'plants' ? 'panel-admin__tab-btn--activo' : ''
               }`}
+              aria-selected={activeTab === 'plants'}
             >
               <Leaf className="panel-admin__tab-icon" />
               Plantas Medicinales
@@ -258,6 +225,7 @@ function PanelAdmin() {
               className={`panel-admin__tab-btn ${
                 activeTab === 'events' ? 'panel-admin__tab-btn--activo' : ''
               }`}
+              aria-selected={activeTab === 'events'}
             >
               <Calendar className="panel-admin__tab-icon" />
               Eventos
@@ -267,23 +235,23 @@ function PanelAdmin() {
 
         {/* Pestaña de Plantas */}
         {activeTab === 'plants' && (
-          <div className="panel-admin__section">
+          <section className="panel-admin__section">
             {/* Stats */}
             <div className="panel-admin__stats-grid">
-              <div className="panel-admin__stat-card">
+              <article className="panel-admin__stat-card">
                 <h3 className="panel-admin__stat-label">Total de Plantas</h3>
                 <p className="panel-admin__stat-value">{plants.length}</p>
-              </div>
-              <div className="panel-admin__stat-card">
+              </article>
+              <article className="panel-admin__stat-card">
                 <h3 className="panel-admin__stat-label">Categorías</h3>
                 <p className="panel-admin__stat-value">
-                  {new Set(plants.map((p) => p.category).filter(Boolean)).size}
+                  {new Set(plants.map((p) => p.categoria).filter(Boolean)).size}
                 </p>
-              </div>
-              <div className="panel-admin__stat-card">
+              </article>
+              <article className="panel-admin__stat-card">
                 <h3 className="panel-admin__stat-label">Estado</h3>
                 <p className="panel-admin__stat-value panel-admin__stat-value--texto">Activo</p>
-              </div>
+              </article>
             </div>
 
             {/* Botón Agregar */}
@@ -311,9 +279,9 @@ function PanelAdmin() {
                       </label>
                       <input
                         type="text"
-                        value={plantFormData.name}
+                        value={plantFormData.nombre}
                         onChange={(e) =>
-                          setPlantFormData({ ...plantFormData, name: e.target.value })
+                          setPlantFormData({ ...plantFormData, nombre: e.target.value })
                         }
                         className="panel-admin__form-input"
                         required
@@ -324,9 +292,9 @@ function PanelAdmin() {
                         Categoría
                       </label>
                       <select
-                        value={plantFormData.category}
+                        value={plantFormData.categoria}
                         onChange={(e) =>
-                          setPlantFormData({ ...plantFormData, category: e.target.value })
+                          setPlantFormData({ ...plantFormData, categoria: e.target.value })
                         }
                         className="panel-admin__form-select"
                         required
@@ -349,9 +317,9 @@ function PanelAdmin() {
                     </label>
                     <input
                       type="url"
-                      value={plantFormData.image}
+                      value={plantFormData.imagen}
                       onChange={(e) =>
-                        setPlantFormData({ ...plantFormData, image: e.target.value })
+                        setPlantFormData({ ...plantFormData, imagen: e.target.value })
                       }
                       className="panel-admin__form-input"
                       placeholder="https://ejemplo.com/imagen.jpg"
@@ -364,9 +332,9 @@ function PanelAdmin() {
                       Beneficios
                     </label>
                     <textarea
-                      value={plantFormData.benefits}
+                      value={plantFormData.beneficios}
                       onChange={(e) =>
-                        setPlantFormData({ ...plantFormData, benefits: e.target.value })
+                        setPlantFormData({ ...plantFormData, beneficios: e.target.value })
                       }
                       className="panel-admin__form-textarea"
                       rows={3}
@@ -379,9 +347,9 @@ function PanelAdmin() {
                       Usos
                     </label>
                     <textarea
-                      value={plantFormData.uses}
+                      value={plantFormData.usos}
                       onChange={(e) =>
-                        setPlantFormData({ ...plantFormData, uses: e.target.value })
+                        setPlantFormData({ ...plantFormData, usos: e.target.value })
                       }
                       className="panel-admin__form-textarea"
                       rows={3}
@@ -429,15 +397,15 @@ function PanelAdmin() {
                     {plants.map((plant, index) => (
                       <tr key={index} className="panel-admin__tr">
                         <td className="panel-admin__td panel-admin__td--name">
-                          <div className="panel-admin__item-name">{plant.name}</div>
+                          <div className="panel-admin__item-name">{plant.nombre}</div>
                         </td>
                         <td className="panel-admin__td">
                           <span className="panel-admin__badge">
-                            {plant.category}
+                            {plant.categoria}
                           </span>
                         </td>
                         <td className="panel-admin__td panel-admin__td--benefits">
-                          <div className="panel-admin__item-desc">{plant.benefits}</div>
+                          <div className="panel-admin__item-desc">{plant.beneficios}</div>
                         </td>
                         <td className="panel-admin__td panel-admin__td--actions">
                           <div className="panel-admin__cell-actions">
@@ -463,28 +431,28 @@ function PanelAdmin() {
                 </table>
               </div>
             </div>
-          </div>
+          </section>
         )}
 
         {/* Pestaña de Eventos */}
         {activeTab === 'events' && (
-          <div className="panel-admin__section">
+          <section className="panel-admin__section">
             {/* Stats */}
             <div className="panel-admin__stats-grid">
-              <div className="panel-admin__stat-card">
+              <article className="panel-admin__stat-card">
                 <h3 className="panel-admin__stat-label">Total de Eventos</h3>
                 <p className="panel-admin__stat-value">{events.length}</p>
-              </div>
-              <div className="panel-admin__stat-card">
+              </article>
+              <article className="panel-admin__stat-card">
                 <h3 className="panel-admin__stat-label">Total Participantes</h3>
                 <p className="panel-admin__stat-value">
-                  {events.reduce((sum, e) => sum + (e.attendees || 0), 0)}
+                  {events.reduce((sum, e) => sum + (e.participantes || 0), 0)}
                 </p>
-              </div>
-              <div className="panel-admin__stat-card">
+              </article>
+              <article className="panel-admin__stat-card">
                 <h3 className="panel-admin__stat-label">Estado</h3>
                 <p className="panel-admin__stat-value panel-admin__stat-value--texto">Activo</p>
-              </div>
+              </article>
             </div>
 
             {/* Botón Agregar */}
@@ -511,9 +479,9 @@ function PanelAdmin() {
                     </label>
                     <input
                       type="text"
-                      value={eventFormData.title}
+                      value={eventFormData.titulo}
                       onChange={(e) =>
-                        setEventFormData({ ...eventFormData, title: e.target.value })
+                        setEventFormData({ ...eventFormData, titulo: e.target.value })
                       }
                       className="panel-admin__form-input"
                       required
@@ -527,9 +495,9 @@ function PanelAdmin() {
                       </label>
                       <input
                         type="text"
-                        value={eventFormData.date}
+                        value={eventFormData.fecha}
                         onChange={(e) =>
-                          setEventFormData({ ...eventFormData, date: e.target.value })
+                          setEventFormData({ ...eventFormData, fecha: e.target.value })
                         }
                         className="panel-admin__form-input"
                         placeholder="20 de Mayo, 2026"
@@ -542,9 +510,9 @@ function PanelAdmin() {
                       </label>
                       <input
                         type="text"
-                        value={eventFormData.time}
+                        value={eventFormData.hora}
                         onChange={(e) =>
-                          setEventFormData({ ...eventFormData, time: e.target.value })
+                          setEventFormData({ ...eventFormData, hora: e.target.value })
                         }
                         className="panel-admin__form-input"
                         placeholder="10:00 AM - 12:00 PM"
@@ -557,11 +525,11 @@ function PanelAdmin() {
                       </label>
                       <input
                         type="number"
-                        value={eventFormData.attendees}
+                        value={eventFormData.participantes}
                         onChange={(e) =>
                           setEventFormData({
                             ...eventFormData,
-                            attendees: parseInt(e.target.value) || 0
+                            participantes: parseInt(e.target.value) || 0
                           })
                         }
                         className="panel-admin__form-input"
@@ -576,9 +544,9 @@ function PanelAdmin() {
                     </label>
                     <input
                       type="text"
-                      value={eventFormData.location}
+                      value={eventFormData.ubicacion}
                       onChange={(e) =>
-                        setEventFormData({ ...eventFormData, location: e.target.value })
+                        setEventFormData({ ...eventFormData, ubicacion: e.target.value })
                       }
                       className="panel-admin__form-input"
                       placeholder="Jardín Botánico Municipal"
@@ -592,9 +560,9 @@ function PanelAdmin() {
                     </label>
                     <input
                       type="url"
-                      value={eventFormData.image}
+                      value={eventFormData.imagen}
                       onChange={(e) =>
-                        setEventFormData({ ...eventFormData, image: e.target.value })
+                        setEventFormData({ ...eventFormData, imagen: e.target.value })
                       }
                       className="panel-admin__form-input"
                       placeholder="https://ejemplo.com/imagen.jpg"
@@ -607,9 +575,9 @@ function PanelAdmin() {
                       Descripción
                     </label>
                     <textarea
-                      value={eventFormData.description}
+                      value={eventFormData.descripcion}
                       onChange={(e) =>
-                        setEventFormData({ ...eventFormData, description: e.target.value })
+                        setEventFormData({ ...eventFormData, descripcion: e.target.value })
                       }
                       className="panel-admin__form-textarea"
                       rows={3}
@@ -658,17 +626,17 @@ function PanelAdmin() {
                     {events.map((event, index) => (
                       <tr key={index} className="panel-admin__tr">
                         <td className="panel-admin__td panel-admin__td--title">
-                          <div className="panel-admin__item-name">{event.title}</div>
+                          <div className="panel-admin__item-name">{event.titulo}</div>
                         </td>
                         <td className="panel-admin__td whitespace-nowrap">
-                          <div className="panel-admin__item-date">{event.date}</div>
+                          <div className="panel-admin__item-date">{event.fecha}</div>
                         </td>
                         <td className="panel-admin__td">
-                          <div className="panel-admin__item-location">{event.location}</div>
+                          <div className="panel-admin__item-location">{event.ubicacion}</div>
                         </td>
                         <td className="panel-admin__td whitespace-nowrap">
                           <span className="panel-admin__badge panel-admin__badge--blue">
-                            {event.attendees}
+                            {event.participantes}
                           </span>
                         </td>
                         <td className="panel-admin__td panel-admin__td--actions">
@@ -695,9 +663,9 @@ function PanelAdmin() {
                 </table>
               </div>
             </div>
-          </div>
+          </section>
         )}
-      </div>
+      </main>
     </div>
   );
 }
