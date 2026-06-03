@@ -1,11 +1,23 @@
+import { useState, useEffect } from 'react';
 import EncabezadoSeccion from '../../atoms/EncabezadoSeccion/EncabezadoSeccion.jsx';
 import TarjetaPlanta from '../../molecules/TarjetaPlanta/TarjetaPlanta.jsx';
 import Boton from '../../atoms/Boton/Boton.jsx';
-import { plantas } from '../../../datos/plantas.js';
+import { plantas as plantasIniciales } from '../../../datos/plantas.js';
 import './SeccionPlantas.scss';
 
 function SeccionPlantas() {
-  const plantasDestacadas = plantas.slice(0, 6);
+  const [plantas, setPlantas] = useState([]);
+  useEffect(() => {
+    const guardadas = localStorage.getItem('adminPlants');
+    
+    if (guardadas) {
+      setPlantas(JSON.parse(guardadas));
+    } else {
+      setPlantas(plantasIniciales);
+    }
+  }, []);
+
+  const plantasDestacadas = plantas.slice(0,6);
 
   return (
     <section id="plantas" className="seccion-plantas" aria-labelledby="titulo-plantas">
@@ -16,9 +28,9 @@ function SeccionPlantas() {
           descripcion="Conoce las plantas medicinales más populares y fáciles de cultivar en tu hogar"
         />
         <div className="seccion-plantas__rejilla">
-          {plantasDestacadas.map((planta) => (
+          {plantasDestacadas.map((planta, index) => (
             <TarjetaPlanta
-              key={planta.id}
+              key={planta.id || index}
               nombre={planta.nombre}
               imagen={planta.imagen}
               beneficios={planta.beneficios}

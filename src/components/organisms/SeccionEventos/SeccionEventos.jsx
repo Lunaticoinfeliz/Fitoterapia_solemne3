@@ -1,10 +1,21 @@
+import { useState, useEffect } from 'react';
 import EncabezadoSeccion from '../../atoms/EncabezadoSeccion/EncabezadoSeccion.jsx';
 import TarjetaEvento from '../../molecules/TarjetaEvento/TarjetaEvento.jsx';
 import Boton from '../../atoms/Boton/Boton.jsx';
-import { eventos } from '../../../datos/eventos.js';
+import { eventos as eventosIniciales } from '../../../datos/eventos.js';
 import './SeccionEventos.scss';
 
 function SeccionEventos() {
+  const [eventos, setEventos] = useState([]);
+  useEffect(() => {
+    const guardados = localStorage.getItem('adminEvents');
+    if(guardados) {
+      setEventos(JSON.parse(guardados));
+    } else {
+      setEventos(eventosIniciales);
+    }
+  }, []);
+
   return (
     <section id="eventos" className="seccion-eventos" aria-labelledby="titulo-eventos">
       <div className="seccion-eventos__contenedor">
@@ -14,9 +25,9 @@ function SeccionEventos() {
           descripcion="Únete a nuestra comunidad en talleres, cursos y eventos sobre plantas medicinales"
         />
         <div className="seccion-eventos__rejilla">
-          {eventos.map((evento) => (
+          {eventos.map((evento, index) => (
             <TarjetaEvento
-              key={evento.id}
+              key={evento.id || index}
               titulo={evento.titulo}
               descripcion={evento.descripcion}
               fecha={evento.fecha}
