@@ -5,16 +5,23 @@ import Boton from '../../atoms/Boton/Boton.jsx';
 import { eventos as eventosIniciales } from '../../../datos/eventos.js';
 import './SeccionEventos.scss';
 
+const EVENTOS_INICIALES = 1;
+
 function SeccionEventos() {
   const [eventos, setEventos] = useState([]);
+  const [expandido, setExpandido] = useState(false);
+
   useEffect(() => {
     const guardados = localStorage.getItem('adminEvents');
-    if(guardados) {
+    if (guardados) {
       setEventos(JSON.parse(guardados));
     } else {
       setEventos(eventosIniciales);
     }
   }, []);
+
+  const eventosVisibles = expandido ? eventos : eventos.slice(0, EVENTOS_INICIALES);
+  const hayMas = eventos.length > EVENTOS_INICIALES;
 
   return (
     <section id="eventos" className="seccion-eventos" aria-labelledby="titulo-eventos">
@@ -25,7 +32,7 @@ function SeccionEventos() {
           descripcion="Únete a nuestra comunidad en talleres, cursos y eventos sobre plantas medicinales"
         />
         <div className="seccion-eventos__rejilla">
-          {eventos.map((evento, index) => (
+          {eventosVisibles.map((evento, index) => (
             <TarjetaEvento
               key={evento.id || index}
               titulo={evento.titulo}
@@ -38,14 +45,16 @@ function SeccionEventos() {
             />
           ))}
         </div>
-        <div className="seccion-eventos__acciones">
-          <Boton
-            tipo="enlace"
-            href="#login"
-            texto="Ver más eventos"
-            aria-label="Ver listado completo de eventos"
-          />
-        </div>
+        {hayMas && (
+          <div className="seccion-eventos__acciones">
+            <Boton
+              tipo="button"
+              texto={expandido ? 'Ver menos eventos' : 'Ver más eventos'}
+              aria-label={expandido ? 'Mostrar menos eventos' : 'Ver listado completo de eventos'}
+              onClick={() => setExpandido(!expandido)}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
