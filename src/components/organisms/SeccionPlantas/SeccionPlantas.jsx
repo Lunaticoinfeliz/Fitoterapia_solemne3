@@ -5,11 +5,14 @@ import Boton from '../../atoms/Boton/Boton.jsx';
 import { plantas as plantasIniciales } from '../../../datos/plantas.js';
 import './SeccionPlantas.scss';
 
+const PLANTAS_INICIALES = 3; // cuántas mostrar al inicio
+
 function SeccionPlantas() {
   const [plantas, setPlantas] = useState([]);
+  const [expandido, setExpandido] = useState(false);
+
   useEffect(() => {
     const guardadas = localStorage.getItem('adminPlants');
-    
     if (guardadas) {
       setPlantas(JSON.parse(guardadas));
     } else {
@@ -17,7 +20,8 @@ function SeccionPlantas() {
     }
   }, []);
 
-  const plantasDestacadas = plantas.slice(0,6);
+  const plantasVisibles = expandido ? plantas : plantas.slice(0, PLANTAS_INICIALES);
+  const hayMas = plantas.length > PLANTAS_INICIALES;
 
   return (
     <section id="plantas" className="seccion-plantas" aria-labelledby="titulo-plantas">
@@ -28,7 +32,7 @@ function SeccionPlantas() {
           descripcion="Conoce las plantas medicinales más populares y fáciles de cultivar en tu hogar"
         />
         <div className="seccion-plantas__rejilla">
-          {plantasDestacadas.map((planta, index) => (
+          {plantasVisibles.map((planta, index) => (
             <TarjetaPlanta
               key={planta.id || index}
               nombre={planta.nombre}
@@ -38,14 +42,16 @@ function SeccionPlantas() {
             />
           ))}
         </div>
-        <div className="seccion-plantas__acciones">
-          <Boton
-            tipo="enlace"
-            href="#catalogo"
-            texto="Ver más plantas"
-            aria-label="Ver catálogo completo de plantas"
-          />
-        </div>
+        {hayMas && (
+          <div className="seccion-plantas__acciones">
+            <Boton
+              tipo="button"
+              texto={expandido ? 'Ver menos plantas' : 'Ver más plantas'}
+              aria-label={expandido ? 'Mostrar menos plantas' : 'Ver catálogo completo de plantas'}
+              onClick={() => setExpandido(!expandido)}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
