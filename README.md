@@ -96,5 +96,5 @@ npm run preview
 ## 🔑 Credenciales de Acceso Administrador
 
 Para probar las funcionalidades de administración, utiliza las siguientes credenciales en el apartado de inicio de sesión (`/admin/login`):
-* **Usuario**: `admin`
-* **Contraseña**: `admin123` *(o las definidas en el almacenamiento local)*
+* **Usuario**: `prueba`
+* **Contraseña**: `12345678` *(o las definidas en el almacenamiento local)*
