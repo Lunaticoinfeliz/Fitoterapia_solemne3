@@ -12,12 +12,21 @@ function SeccionEventos() {
   const [expandido, setExpandido] = useState(false);
 
   useEffect(() => {
-    const guardados = localStorage.getItem('adminEvents');
-    if (guardados) {
-      setEventos(JSON.parse(guardados));
-    } else {
-      setEventos(eventosIniciales);
-    }
+    fetch('http://localhost:8000/api/eventos/?activo=true')
+      .then((res) => {
+        if (!res.ok) throw new Error('Error en la petición');
+        return res.json();
+      })
+      .then((data) => setEventos(data))
+      .catch((err) => {
+        console.error('Error al obtener eventos de la API, usando respaldo:', err);
+        const guardados = localStorage.getItem('adminEvents');
+        if (guardados) {
+          setEventos(JSON.parse(guardados));
+        } else {
+          setEventos(eventosIniciales);
+        }
+      });
   }, []);
 
   const eventosVisibles = expandido ? eventos : eventos.slice(0, EVENTOS_INICIALES);
@@ -38,10 +47,10 @@ function SeccionEventos() {
               titulo={evento.titulo}
               descripcion={evento.descripcion}
               fecha={evento.fecha}
-              hora={evento.hora}
+              hora={evento.horario || evento.hora}
               ubicacion={evento.ubicacion}
-              participantes={evento.participantes}
-              imagen={evento.imagen}
+              participantes={evento.participantes_max || evento.participantes}
+              imagen={evento.imagen_url || evento.imagen}
             />
           ))}
         </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import EncabezadoSeccion from '../../atoms/EncabezadoSeccion/EncabezadoSeccion.jsx';
 import TarjetaPlanta from '../../molecules/TarjetaPlanta/TarjetaPlanta.jsx';
 import Boton from '../../atoms/Boton/Boton.jsx';
@@ -9,18 +10,27 @@ const PLANTAS_INICIALES = 3;
 
 function SeccionPlantas() {
   const [plantas, setPlantas] = useState([]);
-  const [expandido, setExpandido] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const guardadas = localStorage.getItem('adminPlants');
-    if (guardadas) {
-      setPlantas(JSON.parse(guardadas));
-    } else {
-      setPlantas(plantasIniciales);
-    }
+    fetch('http://localhost:8000/api/plantas/?solo_activas=true')
+      .then((res) => {
+        if (!res.ok) throw new Error('Error en la petición');
+        return res.json();
+      })
+      .then((data) => setPlantas(data))
+      .catch((err) => {
+        console.error('Error al obtener plantas de la API, usando respaldo:', err);
+        const guardadas = localStorage.getItem('adminPlants');
+        if (guardadas) {
+          setPlantas(JSON.parse(guardadas));
+        } else {
+          setPlantas(plantasIniciales);
+        }
+      });
   }, []);
 
-  const plantasVisibles = expandido ? plantas : plantas.slice(0, PLANTAS_INICIALES);
+  const plantasVisibles = plantas.slice(0, PLANTAS_INICIALES);
   const hayMas = plantas.length > PLANTAS_INICIALES;
 
   return (
@@ -35,10 +45,10 @@ function SeccionPlantas() {
           {plantasVisibles.map((planta, index) => (
             <TarjetaPlanta
               key={planta.id || index}
-              nombre={planta.nombre}
-              imagen={planta.imagen}
-              beneficios={planta.beneficios}
-              usos={planta.usos}
+              nombre={planta.nombre_comun || planta.nombre}
+              imagen={planta.imagen_url || planta.imagen}
+              beneficios={planta.propiedades_usos || planta.beneficios}
+              usos={planta.posologia || planta.usos}
             />
           ))}
         </div>
@@ -46,9 +56,9 @@ function SeccionPlantas() {
           <div className="seccion-plantas__acciones">
             <Boton
               tipo="button"
-              texto={expandido ? 'Ver menos plantas' : 'Ver más plantas'}
-              aria-label={expandido ? 'Mostrar menos plantas' : 'Ver catálogo completo de plantas'}
-              onClick={() => setExpandido(!expandido)}
+              texto="Ver catálogo completo"
+              aria-label="Ver catálogo completo de plantas"
+              onClick={() => navigate('/plantas')}
             />
           </div>
         )}

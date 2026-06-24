@@ -1,0 +1,519 @@
+[
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 1,
+    "fields": {
+      "nombre": "Digestivo",
+      "descripcion": "Plantas para el sistema digestivo y tracto gastrointestinal"
+    }
+  },
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 2,
+    "fields": {
+      "nombre": "Piel",
+      "descripcion": "Plantas para uso dermatológico y afecciones cutáneas"
+    }
+  },
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 3,
+    "fields": {
+      "nombre": "Laxante",
+      "descripcion": "Plantas con efecto laxante o purgante"
+    }
+  },
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 4,
+    "fields": {
+      "nombre": "Respiratorio",
+      "descripcion": "Plantas para vías respiratorias y resfríos"
+    }
+  },
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 5,
+    "fields": {
+      "nombre": "Sedante / Ansiolítico",
+      "descripcion": "Plantas con efecto calmante y para el sueño"
+    }
+  },
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 6,
+    "fields": {
+      "nombre": "Antiinflamatorio",
+      "descripcion": "Plantas con propiedades antiinflamatorias"
+    }
+  },
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 7,
+    "fields": {
+      "nombre": "Antiespasmódico",
+      "descripcion": "Plantas para espasmos musculares y calambres"
+    }
+  },
+  {
+    "model": "fitoterapia.categoria",
+    "pk": 8,
+    "fields": {
+      "nombre": "Circulatorio",
+      "descripcion": "Plantas que actúan sobre el sistema cardiovascular"
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 1,
+    "fields": {
+      "nombre_cientifico": "Allium cepa",
+      "nombre_comun": "Cebolla",
+      "familia": "Allium",
+      "categoria": 4,
+      "imagen_url": "https://images.unsplash.com/photo-1508747703725-719777637510?w=600&q=80",
+      "parte_utilizada": "Bulbo",
+      "propiedades_usos": "Expectorante, antiséptico, hipocolesterolemiante, anticoagulante, hipotensor.",
+      "posologia": "100g diario de bulbos frescos durante las comidas",
+      "efectos_adversos": "Las mujeres embarazadas y mujeres en período de lactancia deben limitar la cantidad de consumo de la cebolla con la frecuencia causa la acidez estomacal durante estas fases.",
+      "interacciones": "No se han reportado interacciones de significancia clínica con medicamentos, pero debido a su acción hipoglicemiante se postula que puede acentuar el efecto de los medicamentos utilizados para el tratamiento de la diabetes, siendo necesario el monitoreo de la glicemia.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 2,
+    "fields": {
+      "nombre_cientifico": "Allium sativum",
+      "nombre_comun": "Ajo",
+      "familia": "Allium",
+      "categoria": 8,
+      "imagen_url": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=600&q=80",
+      "parte_utilizada": "Bulbo",
+      "propiedades_usos": "Antihipertensivo, hipolipemiante, diurético, bactericida, antiviral, anticoagulante.",
+      "posologia": "Dosis de 2-3 dientes diarios.",
+      "efectos_adversos": "Su ingestión continuada y abusiva puede provocar una cierta irritación en el estómago. No es aconsejable la ingestión durante la lactancia.",
+      "interacciones": "Su empleo en conjunto con medicamentos antihipertensivos como el lisinopril, puede aumentar el efecto hipotensor. Su empleo en conjunto con medicamentos antiagregantes plaquetarios aumenta la probabilidad de presentar sangrado.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 3,
+    "fields": {
+      "nombre_cientifico": "Aloe barbadensis M.",
+      "nombre_comun": "Aloe Vera",
+      "familia": "Aloaceae.",
+      "categoria": 2,
+      "imagen_url": "/assets/aloe.jpg",
+      "parte_utilizada": "Hojas, gel de las hojas, acíbar (zumo de las hojas que fluye en forma espontánea al realizar una incisión en el órgano).",
+      "propiedades_usos": "Para el tratamiento de estreñimiento, alteraciones de la piel, suplemento alimentario.",
+      "posologia": "Correspondiente a 10-30 mg. de derivados hidroxiantracénicos expresados en barbaloína. Comisión E recomienda 20 a 30 mg. de derivados hidroxiantracénicos calculados como aloína anhidra. Como laxante o purgante. Uso externo, se aplica un trozo del gel directo sobre la lesión.",
+      "efectos_adversos": "Puede producir dermatitis de contacto.",
+      "interacciones": "El consumo del zumo de las hojas en conjunto con la utilización de medicamentos hipoglucemiantes como la glibenclamida, aumenta el riesgo de poder presentar reducción de la glicemia.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 4,
+    "fields": {
+      "nombre_cientifico": "Aloysia triphylla (LHerit.) Britt.",
+      "nombre_comun": "Cedrón",
+      "familia": "Verbenaceae.",
+      "categoria": 1,
+      "imagen_url": "https://images.unsplash.com/photo-1628556264700-0972455bda14?w=600&q=80",
+      "parte_utilizada": "Hojas.",
+      "propiedades_usos": "Bebida reconfortante. Calma los trastornos digestivos, desórdenes neurológicos leves en adultos y niños, en particular en las primeras etapas del insomnio. Se utiliza además como saborizante de bebidas, postres, jaleas y otros.",
+      "posologia": "45 mL de decocto al día.",
+      "efectos_adversos": "No administrar por un periodo prolongado de tiempo ni infusiones muy concentradas.",
+      "interacciones": "No se describen interacciones de relevancia clínica.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 5,
+    "fields": {
+      "nombre_cientifico": "Borago officinalis L.",
+      "nombre_comun": "Borraja",
+      "familia": "Boraginaceae.",
+      "categoria": 4,
+      "imagen_url": "https://images.unsplash.com/photo-1505542460262-a4722a8a9a2a?w=600&q=80",
+      "parte_utilizada": "Flores y semillas.",
+      "propiedades_usos": "Infusión (10 g/L) como sudorífico, emoliente, diurético. En afecciones de las vías respiratorias, resfriados y bronquitis. El aceite de semillas se recomienda para prevenir el envejecimiento de la piel.",
+      "posologia": "1 a 2 cucharaditas de té de flores para una taza de agua recién hervida.",
+      "efectos_adversos": "No usar por vía oral durante el embarazo. No administrar por periodos prolongados de tiempo ni infusiones muy concentradas. Contraindicada en neoplasias y enfermedades hepáticas.",
+      "interacciones": "Se recomienda no emplear esta planta medicinal si es que se consume medicamentos anticoagulantes, debido al riesgo de presentar sangrado. No se recomienda su utilización en pacientes epilépticos, pues puede gatillar la aparición de convulsiones. De la misma manera, se recomienda no emplear la planta si se consumen medicamentos antiepilépticos, pues estos podrían ver reducida su efectividad.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 6,
+    "fields": {
+      "nombre_cientifico": "Buddleja globosa Hope",
+      "nombre_comun": "Matico",
+      "familia": "Buddlejaceae.",
+      "categoria": 2,
+      "imagen_url": "https://images.unsplash.com/photo-1568584711271-e0037e3a368e?w=600&q=80",
+      "parte_utilizada": "Hojas.",
+      "propiedades_usos": "Se utiliza como diurético, antiinflamatorio, antiséptico local y cicatrizante de heridas internas y externas. También se utiliza en afecciones hepáticas.",
+      "posologia": "En infusión, para uso interno y externo, 1 a 2 hojas medianas para una taza de agua recién hervida.",
+      "efectos_adversos": "Estos productos tienen el carácter de auxiliares sintomáticos y no reemplazan lo indicado por el médico.",
+      "interacciones": "No se describen interacciones relevantes.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 7,
+    "fields": {
+      "nombre_cientifico": "Calendula officinalis L.",
+      "nombre_comun": "Caléndula",
+      "familia": "Compositae.",
+      "categoria": 2,
+      "imagen_url": "/assets/calendula.jpg",
+      "parte_utilizada": "Capítulos florales.",
+      "propiedades_usos": "Cicatrizante, antiséptica y antiinflamatoria de piel. Se utiliza en el tratamiento tópico de inflamaciones menores de piel y mucosas, así como en pequeñas heridas.",
+      "posologia": "Infusión de 2 gramos de droga pulverizada en 150 a 200 mL de agua, aplicado en compresas en la zona afectada. 3 mL de tintura por 300 a 400 de agua. Pomada con 2 a 5 gramos de droga vegetal por 100 gramos de pomada.",
+      "efectos_adversos": "No se aconseja su empleo oral durante el embarazo, lactancia o niños menores de 10 años sin supervisión médica.",
+      "interacciones": "No se han reportado interacciones de significancia clínica con medicamentos.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 8,
+    "fields": {
+      "nombre_cientifico": "Chamomilla recutita",
+      "nombre_comun": "Manzanilla",
+      "familia": "Asteraceae",
+      "categoria": 1,
+      "imagen_url": "/assets/manzanilla.jpg",
+      "parte_utilizada": "Capítulos florales.",
+      "propiedades_usos": "Se utiliza como tónico estomacal (antiséptico), para aliviar dolores menstruales, como antiespasmódica y antiinflamatoria, contra jaquecas, insomnio, ansiedad y estrés.",
+      "posologia": "Infusión se prepara con 1 cucharadita de té del vegetal para una taza de agua hervida.",
+      "efectos_adversos": "Raras veces puede producir alergias, No debe superarse la dosis indicada y las reacciones a la piel son por contacto externo con la planta.",
+      "interacciones": "Se recomienda evitar utilizar la infusión de manzanilla si se está en tratamiento con medicamentos anticoagulantes, debido al potencial riesgo de presentar sangrado.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 9,
+    "fields": {
+      "nombre_cientifico": "Equisetum sp.",
+      "nombre_comun": "Limpia plata",
+      "familia": "Equisetaceae.",
+      "categoria": 2,
+      "imagen_url": "https://images.unsplash.com/photo-1515150144380-bca9f1650ed9?w=600&q=80",
+      "parte_utilizada": "Tallos estériles.",
+      "propiedades_usos": "Diurético. Para contrarrestar hemorragias uterinas. Tratamiento de heridas ulcerosas, uso externo. Suplemento mineral, en afecciones de la piel. Como uso cosmético, antiarrugas y anticelulitis, como droga pulverizada o infusión.",
+      "posologia": "Beber 1 taza 3 veces al día de la infusión. Su decocto se emplea para uso externo.",
+      "efectos_adversos": "No tomar la infusión demasiado concentrada, especialmente embarazadas.",
+      "interacciones": "No administrar junto al antibiótico Ciprofloxacino. No administrar si se está en tratamiento con medicamentos para el trastorno bipolar, como el carbonato de litio, pues aumenta las concentraciones de litio en el organismo, pudiendo generar toxicidad.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 10,
+    "fields": {
+      "nombre_cientifico": "Foeniculum sp.pl.",
+      "nombre_comun": "Hinojo",
+      "familia": "Apiaceae.",
+      "categoria": 1,
+      "imagen_url": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&q=80",
+      "parte_utilizada": "Frutos.",
+      "propiedades_usos": "En tratamiento de afecciones del tracto gastrointestinal como dispepsias flatulentas y espasmos gastrointestinales. También como expectorante y antitusivo en afecciones de vías respiratorias altas.",
+      "posologia": "Adultos, vía oral, 5 a 7 gramos de frutos, 0,1 a 0,6 mL de aceite esencial. En niños, el ESCOP recomienda los frutos machacados, en infusión, como sigue: 1 a 2 gramos para niños entre 0 y 1 año. 1,5 a 3 gramos para niños entre 1 y 4 años. 3 a 5 gramos entre 4 y 10 años. A los mayores de 10 años se les indica la dosis de adulto.",
+      "efectos_adversos": "El aceite esencial puede resultar neurotóxico y producir convulsiones a dosis elevadas. No debe ser utilizado por más de tres semanas. Puede presentar alergia. No utilizar en embarazo.",
+      "interacciones": "No se recomienda su empleo si se está consumiendo el antibiótico ciprofloxacino, debido a que sería capaz de reducir su absorción y efectividad.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 11,
+    "fields": {
+      "nombre_cientifico": "Hypericum perforatum L",
+      "nombre_comun": "Hierba de San Juan",
+      "familia": "Hypericaceae. Clusiaceae.",
+      "categoria": 5,
+      "imagen_url": "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=600&q=80",
+      "parte_utilizada": "Hojas y ápices.",
+      "propiedades_usos": "Se ha utilizado como diurético y en el tratamiento de desórdenes menstruales., alteraciones nerviosas, perturbaciones del sueño y como antidepresivo.",
+      "posologia": "2 a 4 gramos de droga vegetal al día en infusión.",
+      "efectos_adversos": "Evite la exposición prolongada al sol mientras dura el tratamiento oral. Puede producir reacciones de hipersensibilidad o alergia, en cuyo caso debe discontinuarse el tratamiento y consultar al médico.",
+      "interacciones": "Hypericum perforatum interactúa con una amplia variedad de medicamentos.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 12,
+    "fields": {
+      "nombre_cientifico": "Lavanda angustifolia Mill.",
+      "nombre_comun": "Lavanda",
+      "familia": "Lamiaceae.",
+      "categoria": 5,
+      "imagen_url": "/assets/lavanda.jpg",
+      "parte_utilizada": "Inflorescencias.",
+      "propiedades_usos": "Se utiliza en estados de intranquilidad, insomnio y trastornos digestivos de causa nerviosa.",
+      "posologia": "5 a 10 gramos de droga vegetal en 150 mL de infusión. 1 a 4 gotas de aceite esencial en un terrón de azúcar.",
+      "efectos_adversos": "Contraindicada en úlcera péptica y gastritis (taninos). El aceite esencial puede producir reacciones de hipersensibilidad y dermatitis por contacto.",
+      "interacciones": "Se recomienda precaución si se está consumiendo otros medicamentos que depriman el sistema nervioso central, pues acentúa el efecto sedante de ellos.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 13,
+    "fields": {
+      "nombre_cientifico": "Lomatia hirsuta (Lam) Diels.",
+      "nombre_comun": "Radal",
+      "familia": "Proteaceae",
+      "categoria": 4,
+      "imagen_url": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&q=80",
+      "parte_utilizada": "Hojas.",
+      "propiedades_usos": "Se utiliza como antiasmática y antitusiva. Como descongestionante natural.",
+      "posologia": "Infusión preparada con dos hojas secas por taza de agua, tres a cuatro veces al día. Decocto de la corteza.",
+      "efectos_adversos": "Puede producir diarreas.",
+      "interacciones": "No se describen interacciones de relevancia clínica.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 14,
+    "fields": {
+      "nombre_cientifico": "Marrubium vulgare L.",
+      "nombre_comun": "Marrubio",
+      "familia": "Lamiaceae.",
+      "categoria": 4,
+      "imagen_url": "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?w=600&q=80",
+      "parte_utilizada": "Hojas y sumidades floridas.",
+      "propiedades_usos": "Digestivo y colerético. Para la tos y afecciones bronquiales. En uso externo, en molestias por abscesos cutáneos.",
+      "posologia": "4,5 gramos de droga al día.",
+      "efectos_adversos": "No conviene administrar cuando hay náuseas o vómitos. Puede alterar el ciclo menstrual. no administrar por vía oral durante el embarazo.",
+      "interacciones": "Administrar con precaución a personas con gastritis, úlceras digestivas y arritmias cardiacas. Puede potenciar los efectos de medicamentos hipoglicemiantes y antihipertensivos, aunque no se han reportado interacciones de significancia clínica con medicamentos.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 15,
+    "fields": {
+      "nombre_cientifico": "Melissa officinalis",
+      "nombre_comun": "Melissa",
+      "familia": "Lamiaceae.",
+      "categoria": 5,
+      "imagen_url": "https://images.unsplash.com/photo-1628556264700-0972455bda14?w=600&q=80",
+      "parte_utilizada": "Hojas.",
+      "propiedades_usos": "Se utiliza como sedante, en desórdenes gastrointestinales, antiespasmódica, carminativo. Eficaz en el alivio sintomático del colon irritable. Como ungüento, se utiliza en el tratamiento de herpes.",
+      "posologia": "Infusión, uso interno, 2 a 3 gramos de droga vegetal, 2 a 3 veces al día.",
+      "efectos_adversos": "Cuidado al manejar, por su efecto sedante. Cuidado en pacientes hipotiroideos. No se aconseja su uso por vía oral en embarazo ni lactancia.",
+      "interacciones": "Se recomienda precaución si se está consumiendo otros medicamentos que depriman el sistema nervioso central, pues acentúa el efecto sedante de ellos.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 16,
+    "fields": {
+      "nombre_cientifico": "Mentha sp.",
+      "nombre_comun": "Menta",
+      "familia": "Lamiaceae.",
+      "categoria": 1,
+      "imagen_url": "/assets/menta.jpg",
+      "parte_utilizada": "Hojas.",
+      "propiedades_usos": "Acciones antiespasmódicas, coleréticas y carminativas. Se recomienda beber su infusión después de comidas en caso de gastritis, flatulencia y cólicos digestivos.",
+      "posologia": "Para adultos y ancianos, 1,5 a 3 gramos de la droga vegetal en infusión, tres veces al día.",
+      "efectos_adversos": "No se debe administrar a niños menores de 2 años. Cuidado con personas con cálculos biliares y madres que amamantan (puede reducir el flujo de leche). Almacenar en un lugar fresco y protegido de la luz.",
+      "interacciones": "Se recomienda no emplearla si se está utilizando medicamentos antihipertensivos como nifedipino o felodipino, puesto que aumenta la probabilidad de experimentar reducción de presión arterial. Emplear con cautela en caso de utilizar suplementos de hierro, pues provoca una reducción en la absorción de este elemento.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 17,
+    "fields": {
+      "nombre_cientifico": "Passiflora incarnata",
+      "nombre_comun": "Flor de la Pasión",
+      "familia": "Passiflora",
+      "categoria": 5,
+      "imagen_url": "https://images.unsplash.com/photo-1596701062351-8c2c14d1fdd0?w=600&q=80",
+      "parte_utilizada": "Hojas",
+      "propiedades_usos": "Analgésica, relajante (antidepresivo), sedante (inductor del sueño).",
+      "posologia": "Infusión: 1 cucharadita de hojas secas en una taza de agua recién hervida tomar 3-4 veces en el día. *1 ó 2 flores en una taza de agua hervida, una o dos horas antes de dormir (utilizada para el insomnio)",
+      "efectos_adversos": "En dosis muy elevadas puede producir un discreto efecto narcótico con disminución de los reflejos, confusión. No usar en el embarazado. No usar en periodos de lactancia.",
+      "interacciones": "Se recomienda precaución si se está consumiendo otros medicamentos que depriman el sistema nervioso central, pues acentúa el efecto sedante de ellos.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 18,
+    "fields": {
+      "nombre_cientifico": "Plantago major",
+      "nombre_comun": "Llantén",
+      "familia": "Plantaginaceae.",
+      "categoria": 2,
+      "imagen_url": "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=600&q=80",
+      "parte_utilizada": "Hojas y semillas.",
+      "propiedades_usos": "Tratamiento de heridas internas (úlceras) y externas. Las semillas se utilizan como emolientes. El decocto, en gargarismos para inflamaciones leves de la garganta o parte inferior de la boca. También posee efecto laxante, debiendo ser ingerida con bastante líquido.",
+      "posologia": "En uso interno, 1,4 gramos de planta seca en 150 mL de agua recién hervida, 3 a 4 veces al día. En uso externo, macerado frío como enjuague, gargarismo o cataplasma.",
+      "efectos_adversos": "Evitar durante el embarazo. Infusiones muy concentradas pueden producir un efecto antihipertensivo y laxante potente.",
+      "interacciones": "No se describen interacciones de relevancia clínica.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 19,
+    "fields": {
+      "nombre_cientifico": "Rosmarinus officinalis",
+      "nombre_comun": "Romero",
+      "familia": "Lamiaceae.",
+      "categoria": 8,
+      "imagen_url": "/assets/romero.jpg",
+      "parte_utilizada": "Hojas y tallos.",
+      "propiedades_usos": "Colagogo, colerético, diurético. Además, en afecciones gastrointestinales y renales. Su decocto, en compresas, se utiliza en forma externa, en reumatismo, neuralgias y alopecía.",
+      "posologia": "En uso interno, infusiones de hojas y tallos delgados, una cucharadita de té para una taza de agua recién hervida, dos a tres veces al día. Para uso externo, la misma infusión, aplicada en compresas.",
+      "efectos_adversos": "Administrar con precaución en pacientes hipertensos.",
+      "interacciones": "No se describen interacciones de relevancia clínica.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 20,
+    "fields": {
+      "nombre_cientifico": "Ruta graveolens L.",
+      "nombre_comun": "Ruda",
+      "familia": "Rutaceae.",
+      "categoria": 7,
+      "imagen_url": "https://images.unsplash.com/photo-1618386230248-993af361d033?w=600&q=80",
+      "parte_utilizada": "Hojas y partes aéreas",
+      "propiedades_usos": "Se utiliza en casos de inapetencia y dispepsia, trastornos circulatorios, neuralgias, cefaleas, nerviosismo, fiebre, reumatismo, inflamaciones, espasmos y trastornos de la diuresis. En uso externo se recomienda como compresa de la infusión al 5% en luxaciones, lesiones óseas y cutáneas (eczema y psoriasis).",
+      "posologia": "Una cucharada del vegetal en 1L de agua recién hervida.",
+      "efectos_adversos": "No se aconseja su uso vía oral por su estrecho margen terapéutico. Puede ser abortiva, generar la dermatitis de contacto entre otros efectos.",
+      "interacciones": "No se describen interacciones de relevancia clínica.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 21,
+    "fields": {
+      "nombre_cientifico": "Tanacetum parthenium (L.) Sch. Bip.",
+      "nombre_comun": "Artemisa",
+      "familia": "Asteraceae.",
+      "categoria": 6,
+      "imagen_url": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80",
+      "parte_utilizada": "Hojas, flores y tallos.",
+      "propiedades_usos": "Antipirética, para el tratamiento de la migraña, asma, reumatismo, desequilibrios ginecológicos. Diurética. En forma tópica, en aceite para curar heridas.",
+      "posologia": "Media cucharadita de té de las hojas secas y molidas han mostrado una significativa disminución en la frecuencia y severidad en las afecciones migrañasosas, atenuando además los efectos colaterales de náuseas y vómitos.",
+      "efectos_adversos": "Puede producir ulceraciones bucales, dolores abdominales. Riesgo de reacciones alérgicas en pacientes sensibles.",
+      "interacciones": "No se describen interacciones de relevancia clínica.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 22,
+    "fields": {
+      "nombre_cientifico": "Taraxacum officinale Weber",
+      "nombre_comun": "Diente de león",
+      "familia": "Asteraceae.",
+      "categoria": 1,
+      "imagen_url": "https://images.unsplash.com/photo-1533294484138-aae7f48a27b3?w=600&q=80",
+      "parte_utilizada": "Hojas desecadas, raíces y rizomas secos.",
+      "propiedades_usos": "ESCOP indica la raíz para restauración de la función hepática y biliar, en dispepsia e inapetencia. Las hojas se indican como coadyuvantes en tratamientos en los cuales es necesario mejorar la diuresis (prevención de arenillas renales). La planta entera se considera purificadora y laxante suave, y se utiliza en tratamiento de eczemas, gota, trastornos reumáticos.",
+      "posologia": "Para la raíz: en adultos, 3 a 5 gramos 3 veces al día. Para las hojas: en adultos, 4 a 10 gramos en infusión 3 veces al día. 5 a 10 mL de jugo de hojas frescas 2 veces al día.",
+      "efectos_adversos": "Contraindicada en obstrucción de vías biliares. Raíz y hojas pueden producir dermatitis de contacto.",
+      "interacciones": "No se describen interacciones de relevancia clínica.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 23,
+    "fields": {
+      "nombre_cientifico": "Urtica dioica L.",
+      "nombre_comun": "Ortiga",
+      "familia": "Urticaceae.",
+      "categoria": 6,
+      "imagen_url": "https://images.unsplash.com/photo-1596701062351-8c2c14d1fdd0?w=600&q=80",
+      "parte_utilizada": "Hojas desecadas, sumidad florida",
+      "propiedades_usos": "ESCOP y Comisión E, indican el uso de las hojas por vía interna y externa como adyuvante en el tratamiento sintomático de artritis, artrosis y otras condiciones reumáticas.",
+      "posologia": "3 a 5 gramos de la hoja como infusión, hasta tres veces al día.",
+      "efectos_adversos": "Precaución al utilizarlos en concomitancia con hipotensores, hipoglicemiantes. Se han detectado reacciones alérgicas en el 1,2-2,7% de los pacientes. No se han reportado interacciones de significancia clínica con medicamentos.",
+      "interacciones": "No se describen interacciones relevantes.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 24,
+    "fields": {
+      "nombre_cientifico": "Uncaria tomentosa",
+      "nombre_comun": "Uña de gato",
+      "familia": "Rubiácea",
+      "categoria": 6,
+      "imagen_url": "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?w=600&q=80",
+      "parte_utilizada": "Corteza",
+      "propiedades_usos": "Anti-inflamatório. Antioxidante. Inmunoreguladora.",
+      "posologia": "20 a 30 mg de extracto seco en un litro agua.",
+      "efectos_adversos": "Contiene taninos, por lo que su uso está contraindicado en pacientes con gastritis o úlcera gástrica o duodenal. No debe ser utilizado por mujeres embarazadas o en periodo de lactancia.",
+      "interacciones": "Esta planta medicinal posee propiedades antiagregantes plaquetarias y antihipertensivas, por lo que debe ser empleada con cautela en aquellos casos en que se consuman medicamentos de esa naturaleza.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.planta",
+    "pk": 25,
+    "fields": {
+      "nombre_cientifico": "Verbascum thapsus L.",
+      "nombre_comun": "Hierba del paño",
+      "familia": "Escrofulariaceae.",
+      "categoria": 4,
+      "imagen_url": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=600&q=80",
+      "parte_utilizada": "Flores, corola de las flores",
+      "propiedades_usos": "Tratamiento de afecciones respiratorias del tracto superior e inferior, como tos seca, bronquitis o resfrío común. Actividad expectorante debido a la presencia de saponinas. Acción antitusiva y demulcente debido a los mucílagos, que calman e hidratan la mucosa respiratoria. Acción emoliente dermatológica, por los mucílagos que captan agua y ejercen un efecto hidratante sobre la piel.",
+      "posologia": "3-4- gramos de droga vegetal al día, repartidos en dos tomas.",
+      "efectos_adversos": "Estos productos tienen el carácter de auxiliares sintomáticos y no reemplazan lo indicado por el médico. No se han reportado interacciones de significancia clínica con medicamentos.",
+      "interacciones": "No se describen interacciones relevantes.",
+      "activa": true
+    }
+  },
+  {
+    "model": "fitoterapia.evento",
+    "pk": 1,
+    "fields": {
+      "titulo": "Taller de Preparaciones Herbales",
+      "fecha": "15 de junio de 2026",
+      "horario": "10:00 - 13:00",
+      "ubicacion": "Centro Comunitario Verde, Santiago",
+      "participantes_max": 24,
+      "imagen_url": "/assets/taller-preparaciones.jpg",
+      "descripcion": "Aprende a preparar infusiones, tinturas y ungüentos con plantas de tu huerto. Incluye materiales y degustación.",
+      "activo": true
+    }
+  },
+  {
+    "model": "fitoterapia.evento",
+    "pk": 2,
+    "fields": {
+      "titulo": "Curso de Huerto Medicinal para Principiantes",
+      "fecha": "22 de junio de 2026",
+      "horario": "09:00 - 12:00",
+      "ubicacion": "Jardín Botánico Regional",
+      "participantes_max": 18,
+      "imagen_url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80",
+      "descripcion": "Iníciate en el cultivo de plantas terapéuticas: siembra, riego, cosecha y usos seguros en el hogar.",
+      "activo": true
+    }
+  }
+]

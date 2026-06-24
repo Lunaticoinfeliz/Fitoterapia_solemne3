@@ -4,3 +4,10 @@ dist
 *.local
 .env
 .env.*
+
+# Python/Django ignores
+fitoterapia_backend/venv/
+fitoterapia_backend/db.sqlite3
+**/__pycache__/
+*.pyc
+

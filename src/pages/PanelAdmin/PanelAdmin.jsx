@@ -12,20 +12,26 @@ function PanelAdmin() {
 
   // Estados de Plantas
   const [plants, setPlants] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [showAddPlantForm, setShowAddPlantForm] = useState(false);
-  const [editingPlantIndex, setEditingPlantIndex] = useState(null);
+  const [editingPlantId, setEditingPlantId] = useState(null);
   const [plantFormData, setPlantFormData] = useState({
     nombre: '',
+    nombre_cientifico: '',
+    familia: '',
     imagen: '',
     beneficios: '',
     usos: '',
-    categoria: ''
+    categoria: '',
+    parte_utilizada: '',
+    efectos_adversos: '',
+    interacciones: ''
   });
 
   // Estados de Eventos
   const [events, setEvents] = useState([]);
   const [showAddEventForm, setShowAddEventForm] = useState(false);
-  const [editingEventIndex, setEditingEventIndex] = useState(null);
+  const [editingEventId, setEditingEventId] = useState(null);
   const [eventFormData, setEventFormData] = useState({
     titulo: '',
     fecha: '',
@@ -36,6 +42,36 @@ function PanelAdmin() {
     descripcion: ''
   });
 
+  const loadPlants = () => {
+    fetch('http://localhost:8000/api/plantas/')
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al cargar plantas');
+        return res.json();
+      })
+      .then((data) => setPlants(data))
+      .catch((err) => console.error(err));
+  };
+
+  const loadEvents = () => {
+    fetch('http://localhost:8000/api/eventos/')
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al cargar eventos');
+        return res.json();
+      })
+      .then((data) => setEvents(data))
+      .catch((err) => console.error(err));
+  };
+
+  const loadCategories = () => {
+    fetch('http://localhost:8000/api/categorias/')
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al cargar categorías');
+        return res.json();
+      })
+      .then((data) => setCategories(data))
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     // verifica autenticación
     const isAdmin = localStorage.getItem('isAdmin');
@@ -44,23 +80,9 @@ function PanelAdmin() {
       return;
     }
 
-    // Cargar plantas
-    const savedPlants = localStorage.getItem('adminPlants');
-    if (savedPlants) {
-      setPlants(JSON.parse(savedPlants));
-    } else {
-      setPlants(plantas);
-      localStorage.setItem('adminPlants', JSON.stringify(plantas));
-    }
-
-    // Cargar eventos
-    const savedEvents = localStorage.getItem('adminEvents');
-    if (savedEvents) {
-      setEvents(JSON.parse(savedEvents));
-    } else {
-      setEvents(eventos);
-      localStorage.setItem('adminEvents', JSON.stringify(eventos));
-    }
+    loadPlants();
+    loadEvents();
+    loadCategories();
   }, [navigate]);
 
   const handleLogout = () => {
@@ -72,58 +94,119 @@ function PanelAdmin() {
   const handlePlantSubmit = (e) => {
     e.preventDefault();
 
-    let updatedPlants;
-    if (editingPlantIndex !== null) {
-      updatedPlants = [...plants];
-      updatedPlants[editingPlantIndex] = plantFormData;
-      setEditingPlantIndex(null);
-    } else {
-      updatedPlants = [...plants, plantFormData];
-    }
+    const isEditing = editingPlantId !== null;
+    const url = isEditing
+      ? `http://localhost:8000/api/plantas/${editingPlantId}/`
+      : 'http://localhost:8000/api/plantas/';
+    const method = isEditing ? 'PUT' : 'POST';
 
-    setPlants(updatedPlants);
-    localStorage.setItem('adminPlants', JSON.stringify(updatedPlants));
+    const payload = {
+      nombre_comun: plantFormData.nombre,
+      nombre_cientifico: plantFormData.nombre_cientifico || (plantFormData.nombre + " L."),
+      familia: plantFormData.familia || "Lamiaceae",
+      categoria: parseInt(plantFormData.categoria),
+      imagen_url: plantFormData.imagen,
+      parte_utilizada: plantFormData.parte_utilizada || "Hojas y tallos",
+      propiedades_usos: plantFormData.beneficios,
+      posologia: plantFormData.usos,
+      efectos_adversos: plantFormData.efectos_adversos || "Ninguno reportado.",
+      interacciones: plantFormData.interacciones || "Ninguna reportada.",
+      activa: true
+    };
 
-    setPlantFormData({
-      nombre: '',
-      imagen: '',
-      beneficios: '',
-      usos: '',
-      categoria: ''
-    });
-    setShowAddPlantForm(false);
+    fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al guardar la planta');
+        return res.json();
+      })
+      .then(() => {
+        loadPlants();
+        setEditingPlantId(null);
+        setPlantFormData({
+          nombre: '',
+          nombre_cientifico: '',
+          familia: '',
+          imagen: '',
+          beneficios: '',
+          usos: '',
+          categoria: '',
+          parte_utilizada: '',
+          efectos_adversos: '',
+          interacciones: ''
+        });
+        setShowAddPlantForm(false);
+      })
+      .catch((err) => alert(err.message));
   };
 
-  const handlePlantEdit = (index) => {
-    setPlantFormData(plants[index]);
-    setEditingPlantIndex(index);
+  const handlePlantEdit = (plant) => {
+    setPlantFormData({
+      nombre: plant.nombre_comun || plant.nombre || '',
+      nombre_cientifico: plant.nombre_cientifico || '',
+      familia: plant.familia || '',
+      imagen: plant.imagen_url || plant.imagen || '',
+      beneficios: plant.propiedades_usos || plant.beneficios || '',
+      usos: plant.posologia || plant.usos || '',
+      categoria: plant.categoria || '',
+      parte_utilizada: plant.parte_utilizada || '',
+      efectos_adversos: plant.efectos_adversos || '',
+      interacciones: plant.interacciones || ''
+    });
+    setEditingPlantId(plant.id);
     setShowAddPlantForm(true);
   };
 
-  const handlePlantDelete = (index) => {
+  const handlePlantDelete = (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar esta planta?')) {
-      const updatedPlants = plants.filter((_, i) => i !== index);
-      setPlants(updatedPlants);
-      localStorage.setItem('adminPlants', JSON.stringify(updatedPlants));
+      fetch(`http://localhost:8000/api/plantas/${id}/`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Error al eliminar la planta');
+          loadPlants();
+        })
+        .catch((err) => alert(err.message));
     }
   };
 
   const handlePlantCancel = () => {
     setShowAddPlantForm(false);
-    setEditingPlantIndex(null);
+    setEditingPlantId(null);
     setPlantFormData({
       nombre: '',
+      nombre_cientifico: '',
+      familia: '',
       imagen: '',
       beneficios: '',
       usos: '',
-      categoria: ''
+      categoria: '',
+      parte_utilizada: '',
+      efectos_adversos: '',
+      interacciones: ''
     });
   };
 
   const handleRestoreDefaultPlants = () => {
-    if (window.confirm('¿Estás seguro de que deseas restaurar las plantas por defecto? Esto reemplazará los datos actuales en el panel.')) {
-      setPlants(plantas);
-      localStorage.setItem('adminPlants', JSON.stringify(plantas));
+    if (window.confirm('¿Estás seguro de que deseas restaurar las plantas y eventos por defecto? Esto reemplazará los datos actuales en el panel.')) {
+      fetch('http://localhost:8000/api/plantas/restablecer/', {
+        method: 'POST',
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Error al restablecer datos');
+          return res.json();
+        })
+        .then(() => {
+          loadPlants();
+          loadEvents();
+          loadCategories();
+        })
+        .catch((err) => alert(err.message));
     }
   };
 
@@ -131,47 +214,81 @@ function PanelAdmin() {
   const handleEventSubmit = (e) => {
     e.preventDefault();
 
-    let updatedEvents;
-    if (editingEventIndex !== null) {
-      updatedEvents = [...events];
-      updatedEvents[editingEventIndex] = eventFormData;
-      setEditingEventIndex(null);
-    } else {
-      updatedEvents = [...events, eventFormData];
-    }
+    const isEditing = editingEventId !== null;
+    const url = isEditing
+      ? `http://localhost:8000/api/eventos/${editingEventId}/`
+      : 'http://localhost:8000/api/eventos/';
+    const method = isEditing ? 'PUT' : 'POST';
 
-    setEvents(updatedEvents);
-    localStorage.setItem('adminEvents', JSON.stringify(updatedEvents));
+    const payload = {
+      titulo: eventFormData.titulo,
+      fecha: eventFormData.fecha,
+      horario: eventFormData.hora,
+      ubicacion: eventFormData.ubicacion,
+      participantes_max: parseInt(eventFormData.participantes) || 0,
+      imagen_url: eventFormData.imagen,
+      descripcion: eventFormData.descripcion,
+      activo: true
+    };
 
-    setEventFormData({
-      titulo: '',
-      fecha: '',
-      hora: '',
-      ubicacion: '',
-      participantes: 0,
-      imagen: '',
-      descripcion: ''
-    });
-    setShowAddEventForm(false);
+    fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al guardar el evento');
+        return res.json();
+      })
+      .then(() => {
+        loadEvents();
+        setEditingEventId(null);
+        setEventFormData({
+          titulo: '',
+          fecha: '',
+          hora: '',
+          ubicacion: '',
+          participantes: 0,
+          imagen: '',
+          descripcion: ''
+        });
+        setShowAddEventForm(false);
+      })
+      .catch((err) => alert(err.message));
   };
 
-  const handleEventEdit = (index) => {
-    setEventFormData(events[index]);
-    setEditingEventIndex(index);
+  const handleEventEdit = (event) => {
+    setEventFormData({
+      titulo: event.titulo || '',
+      fecha: event.fecha || '',
+      hora: event.horario || event.hora || '',
+      ubicacion: event.ubicacion || '',
+      participantes: event.participantes_max || event.participantes || 0,
+      imagen: event.imagen_url || event.imagen || '',
+      descripcion: event.descripcion || ''
+    });
+    setEditingEventId(event.id);
     setShowAddEventForm(true);
   };
 
-  const handleEventDelete = (index) => {
+  const handleEventDelete = (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este evento?')) {
-      const updatedEvents = events.filter((_, i) => i !== index);
-      setEvents(updatedEvents);
-      localStorage.setItem('adminEvents', JSON.stringify(updatedEvents));
+      fetch(`http://localhost:8000/api/eventos/${id}/`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Error al eliminar el evento');
+          loadEvents();
+        })
+        .catch((err) => alert(err.message));
     }
   };
 
   const handleEventCancel = () => {
     setShowAddEventForm(false);
-    setEditingEventIndex(null);
+    setEditingEventId(null);
     setEventFormData({
       titulo: '',
       fecha: '',
@@ -184,10 +301,7 @@ function PanelAdmin() {
   };
 
   const handleRestoreDefaultEvents = () => {
-    if (window.confirm('¿Estás seguro de que deseas restaurar los eventos por defecto? Esto reemplazará los datos actuales en el panel.')) {
-      setEvents(eventos);
-      localStorage.setItem('adminEvents', JSON.stringify(eventos));
-    }
+    handleRestoreDefaultPlants(); // Ambas llaman al restablecer común que reinicia plantas, categorías y eventos
   };
 
   return (
@@ -291,13 +405,13 @@ function PanelAdmin() {
             {showAddPlantForm && (
               <div className="panel-admin__form-container">
                 <h3 className="panel-admin__form-title">
-                  {editingPlantIndex !== null ? 'Editar Planta' : 'Agregar Nueva Planta'}
+                  {editingPlantId !== null ? 'Editar Planta' : 'Agregar Nueva Planta'}
                 </h3>
                 <form onSubmit={handlePlantSubmit} className="panel-admin__form">
                   <div className="panel-admin__form-row">
                     <div className="panel-admin__form-group">
                       <label className="panel-admin__form-label">
-                        Nombre de la Planta
+                        Nombre Común
                       </label>
                       <input
                         type="text"
@@ -311,6 +425,83 @@ function PanelAdmin() {
                     </div>
                     <div className="panel-admin__form-group">
                       <label className="panel-admin__form-label">
+                        Nombre Científico
+                      </label>
+                      <input
+                        type="text"
+                        value={plantFormData.nombre_cientifico}
+                        onChange={(e) =>
+                          setPlantFormData({ ...plantFormData, nombre_cientifico: e.target.value })
+                        }
+                        className="panel-admin__form-input"
+                        placeholder="Ej. Matricaria chamomilla L."
+                      />
+                    </div>
+                  </div>
+
+                  <div className="panel-admin__form-row">
+                    <div className="panel-admin__form-group">
+                      <label className="panel-admin__form-label">
+                        Familia
+                      </label>
+                      <input
+                        type="text"
+                        value={plantFormData.familia}
+                        onChange={(e) =>
+                          setPlantFormData({ ...plantFormData, familia: e.target.value })
+                        }
+                        className="panel-admin__form-input"
+                        placeholder="Ej. Asteraceae"
+                      />
+                    </div>
+                    <div className="panel-admin__form-group">
+                      <label className="panel-admin__form-label">
+                        Parte Utilizada
+                      </label>
+                      <input
+                        type="text"
+                        value={plantFormData.parte_utilizada}
+                        onChange={(e) =>
+                          setPlantFormData({ ...plantFormData, parte_utilizada: e.target.value })
+                        }
+                        className="panel-admin__form-input"
+                        placeholder="Ej. Hojas, flores, raíces"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="panel-admin__form-row">
+                    <div className="panel-admin__form-group">
+                      <label className="panel-admin__form-label">
+                        Efectos Adversos
+                      </label>
+                      <input
+                        type="text"
+                        value={plantFormData.efectos_adversos}
+                        onChange={(e) =>
+                          setPlantFormData({ ...plantFormData, efectos_adversos: e.target.value })
+                        }
+                        className="panel-admin__form-input"
+                        placeholder="Ej. Reacciones alérgicas"
+                      />
+                    </div>
+                    <div className="panel-admin__form-group">
+                      <label className="panel-admin__form-label">
+                        Interacciones
+                      </label>
+                      <input
+                        type="text"
+                        value={plantFormData.interacciones}
+                        onChange={(e) =>
+                          setPlantFormData({ ...plantFormData, interacciones: e.target.value })
+                        }
+                        className="panel-admin__form-input"
+                        placeholder="Ej. Evitar con anticoagulantes"
+                      />
+                    </div>
+                  </div>
+                    <div className="panel-admin__form-group">
+                      <label className="panel-admin__form-label">
                         Categoría
                       </label>
                       <select
@@ -322,16 +513,13 @@ function PanelAdmin() {
                         required
                       >
                         <option value="">Seleccionar categoría</option>
-                        <option value="Aromática">Aromática</option>
-                        <option value="Digestiva">Digestiva</option>
-                        <option value="Relajante">Relajante</option>
-                        <option value="Respiratoria">Respiratoria</option>
-                        <option value="Dermatológica">Dermatológica</option>
-                        <option value="Estimulante">Estimulante</option>
-                        <option value="Hormonal">Hormonal</option>
+                        {categories.map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {cat.nombre}
+                          </option>
+                        ))}
                       </select>
                     </div>
-                  </div>
 
                   <div className="panel-admin__form-group">
                     <label className="panel-admin__form-label">
@@ -385,7 +573,7 @@ function PanelAdmin() {
                       className="panel-admin__boton-guardar"
                     >
                       <Save className="panel-admin__form-btn-icono" />
-                      {editingPlantIndex !== null ? 'Guardar Cambios' : 'Agregar Planta'}
+                      {editingPlantId !== null ? 'Guardar Cambios' : 'Agregar Planta'}
                     </button>
                     <button
                       type="button"
@@ -417,31 +605,38 @@ function PanelAdmin() {
                   </thead>
                   <tbody className="panel-admin__tbody">
                     {plants.map((plant, index) => (
-                      <tr key={index} className="panel-admin__tr">
+                      <tr key={plant.id || index} className="panel-admin__tr">
                         <td className="panel-admin__td panel-admin__td--name">
-                          <div className="panel-admin__item-name">{plant.nombre}</div>
+                          <div className="panel-admin__item-name">{plant.nombre_comun || plant.nombre}</div>
+                          {plant.nombre_cientifico && (
+                            <div className="panel-admin__item-sub" style={{ fontSize: '0.8rem', color: '#6b7280', fontStyle: 'italic' }}>
+                              {plant.nombre_cientifico}
+                            </div>
+                          )}
                         </td>
                         <td className="panel-admin__td">
                           <span className="panel-admin__badge">
-                            {plant.categoria}
+                            {plant.categoria_nombre || plant.categoria}
                           </span>
                         </td>
                         <td className="panel-admin__td panel-admin__td--benefits">
-                          <div className="panel-admin__item-desc">{plant.beneficios}</div>
+                          <div className="panel-admin__item-desc">{plant.propiedades_usos || plant.beneficios}</div>
                         </td>
                         <td className="panel-admin__td panel-admin__td--actions">
                           <div className="panel-admin__cell-actions">
                             <button
-                              onClick={() => handlePlantEdit(index)}
+                              onClick={() => handlePlantEdit(plant)}
                               className="panel-admin__btn-accion panel-admin__btn-accion--editar"
                               title="Editar"
+                              type="button"
                             >
                               <Edit2 className="panel-admin__btn-accion-icono" />
                             </button>
                             <button
-                              onClick={() => handlePlantDelete(index)}
+                              onClick={() => handlePlantDelete(plant.id)}
                               className="panel-admin__btn-accion panel-admin__btn-accion--eliminar"
                               title="Eliminar"
+                              type="button"
                             >
                               <Trash2 className="panel-admin__btn-accion-icono" />
                             </button>
@@ -468,7 +663,7 @@ function PanelAdmin() {
               <article className="panel-admin__stat-card">
                 <h3 className="panel-admin__stat-label">Total Participantes</h3>
                 <p className="panel-admin__stat-value">
-                  {events.reduce((sum, e) => sum + (e.participantes || 0), 0)}
+                  {events.reduce((sum, e) => sum + (e.participantes_max || e.participantes || 0), 0)}
                 </p>
               </article>
               <article className="panel-admin__stat-card">
@@ -500,7 +695,7 @@ function PanelAdmin() {
             {showAddEventForm && (
               <div className="panel-admin__form-container">
                 <h3 className="panel-admin__form-title">
-                  {editingEventIndex !== null ? 'Editar Evento' : 'Agregar Nuevo Evento'}
+                  {editingEventId !== null ? 'Editar Evento' : 'Agregar Nuevo Evento'}
                 </h3>
                 <form onSubmit={handleEventSubmit} className="panel-admin__form">
                   <div className="panel-admin__form-group">
@@ -621,7 +816,7 @@ function PanelAdmin() {
                       className="panel-admin__boton-guardar"
                     >
                       <Save className="panel-admin__form-btn-icono" />
-                      {editingEventIndex !== null ? 'Guardar Cambios' : 'Agregar Evento'}
+                      {editingEventId !== null ? 'Guardar Cambios' : 'Agregar Evento'}
                     </button>
                     <button
                       type="button"
@@ -654,7 +849,7 @@ function PanelAdmin() {
                   </thead>
                   <tbody className="panel-admin__tbody">
                     {events.map((event, index) => (
-                      <tr key={index} className="panel-admin__tr">
+                      <tr key={event.id || index} className="panel-admin__tr">
                         <td className="panel-admin__td panel-admin__td--title">
                           <div className="panel-admin__item-name">{event.titulo}</div>
                         </td>
@@ -666,22 +861,24 @@ function PanelAdmin() {
                         </td>
                         <td className="panel-admin__td whitespace-nowrap">
                           <span className="panel-admin__badge panel-admin__badge--blue">
-                            {event.participantes}
+                            {event.participantes_max || event.participantes}
                           </span>
                         </td>
                         <td className="panel-admin__td panel-admin__td--actions">
                           <div className="panel-admin__cell-actions">
                             <button
-                              onClick={() => handleEventEdit(index)}
+                              onClick={() => handleEventEdit(event)}
                               className="panel-admin__btn-accion panel-admin__btn-accion--editar"
                               title="Editar"
+                              type="button"
                             >
                               <Edit2 className="panel-admin__btn-accion-icono" />
                             </button>
                             <button
-                              onClick={() => handleEventDelete(index)}
+                              onClick={() => handleEventDelete(event.id)}
                               className="panel-admin__btn-accion panel-admin__btn-accion--eliminar"
                               title="Eliminar"
+                              type="button"
                             >
                               <Trash2 className="panel-admin__btn-accion-icono" />
                             </button>
